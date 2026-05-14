@@ -1,0 +1,4 @@
+interface:
+  display_name: "MCP Demo Evidence"
+  short_description: "Prepare Day26 MCP screenshots and video script"
+  default_prompt: "Use -mcp-demo-evidence to prepare Day26 MCP demo screenshots and a short video script."

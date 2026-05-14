@@ -1,0 +1,11 @@
+$ python -m unittest discover -s implementation/tests
+exit_code=0
+
+
+
+[stderr]
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.066s
+
+OK

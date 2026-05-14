@@ -179,3 +179,118 @@ Optional bonus:
 - add authentication for SSE or HTTP transport
 - support both SQLite and PostgreSQL with the same MCP surface
 - add richer output annotations or pagination
+
+## Completed Implementation Notes
+
+The working solution lives in `implementation/`.
+
+### Setup
+
+```bash
+python -m pip install -r requirements.txt
+python implementation/init_db.py
+```
+
+### Verify Locally
+
+Run the repeatable smoke check:
+
+```bash
+python implementation/verify_server.py
+```
+
+Run the unit tests:
+
+```bash
+python -m unittest discover -s implementation/tests
+```
+
+### Run the MCP Server
+
+The server uses stdio transport by default:
+
+```bash
+python implementation/mcp_server.py
+```
+
+It exposes these tools:
+
+- `search(table, filters=None, columns=None, limit=20, offset=0, order_by=None, descending=False)`
+- `insert(table, values)`
+- `aggregate(table, metric, column=None, filters=None, group_by=None)`
+
+It exposes these resources:
+
+- `schema://database`
+- `schema://table/{table_name}`
+
+### Example Tool Calls
+
+Search students in cohort `A1`:
+
+```json
+{
+  "table": "students",
+  "filters": {"cohort": "A1"},
+  "order_by": "score",
+  "descending": true
+}
+```
+
+Insert a student:
+
+```json
+{
+  "table": "students",
+  "values": {
+    "name": "New Student",
+    "cohort": "C3",
+    "score": 89.5
+  }
+}
+```
+
+Average score by cohort:
+
+```json
+{
+  "table": "students",
+  "metric": "avg",
+  "column": "score",
+  "group_by": "cohort"
+}
+```
+
+Invalid requests such as missing tables, missing columns, unsupported operators, and empty inserts are rejected with clear error messages.
+
+### MCP Inspector
+
+Replace the paths with absolute paths on your machine:
+
+```bash
+npx -y @modelcontextprotocol/inspector C:/Path/To/python C:/Users/VUDUYLINH/PycharmProjects/VinAI/Day26/Day26-Track3-MCP-tool-integration/implementation/mcp_server.py
+```
+
+Checklist:
+
+- confirm `search`, `insert`, and `aggregate` appear
+- read `schema://database`
+- read `schema://table/students`
+- run one valid search
+- run one invalid request and confirm a clear error
+
+### Codex MCP Client Configuration
+
+Add this to `~/.codex/config.toml`, adjusting the Python path if needed:
+
+```toml
+[mcp_servers.sqlite_lab]
+command = "python"
+args = ["C:/Users/VUDUYLINH/PycharmProjects/VinAI/Day26/Day26-Track3-MCP-tool-integration/implementation/mcp_server.py"]
+```
+
+Suggested Codex demo prompt:
+
+```text
+Use the sqlite_lab MCP server. Read schema://database, then search for students in cohort A1 ordered by score descending.
+```

@@ -1,0 +1,4 @@
+$ python implementation/init_db.py
+exit_code=0
+
+Created database at C:\Users\VUDUYLINH\PycharmProjects\VinAI\Day26\Day26-Track3-MCP-tool-integration\implementation\lab.db

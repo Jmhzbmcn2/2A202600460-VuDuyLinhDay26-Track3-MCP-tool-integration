@@ -1,0 +1,70 @@
+$ python implementation/verify_server.py
+exit_code=0
+
+{
+  "database": "C:\\Users\\VUDUYLINH\\PycharmProjects\\VinAI\\Day26\\Day26-Track3-MCP-tool-integration\\implementation\\lab.db",
+  "tables": [
+    "courses",
+    "enrollments",
+    "students"
+  ],
+  "sample_search": {
+    "table": "students",
+    "rows": [
+      {
+        "id": 5,
+        "name": "Eva Vo",
+        "cohort": "A1",
+        "score": 95.0
+      },
+      {
+        "id": 1,
+        "name": "An Nguyen",
+        "cohort": "A1",
+        "score": 91.5
+      },
+      {
+        "id": 2,
+        "name": "Binh Tran",
+        "cohort": "A1",
+        "score": 84.0
+      }
+    ],
+    "count": 3,
+    "limit": 20,
+    "offset": 0
+  },
+  "sample_insert": {
+    "table": "students",
+    "inserted": {
+      "id": 6,
+      "name": "Test Student",
+      "cohort": "T1",
+      "score": 82.0
+    }
+  },
+  "sample_aggregate": {
+    "table": "students",
+    "metric": "avg",
+    "column": "score",
+    "group_by": [
+      "cohort"
+    ],
+    "rows": [
+      {
+        "cohort": "A1",
+        "value": 90.16666666666667
+      },
+      {
+        "cohort": "B2",
+        "value": 82.25
+      },
+      {
+        "cohort": "T1",
+        "value": 82.0
+      }
+    ]
+  },
+  "invalid_error_ok": true
+}
+Verification passed.
